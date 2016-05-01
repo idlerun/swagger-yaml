@@ -9,7 +9,7 @@ There are two problems I ran into when defining an API in Swagger:
 1. The API must be defined in a single monolithic file
 2. All paths must be defined seperately from the data-type definitions
 
-## Split YAML Files
+## Solution: Split YAML Files
 
 Split the YAML definition to a directory of files which can be combined.
 
