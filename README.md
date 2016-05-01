@@ -50,7 +50,7 @@ definitions:
 YAML is a simple key-value tree structure like JSON, so multiple trees can be combined quite easily with existing libraries.
 
 
-## Full Solution
+## Combine YAML Files
 
 NodeJS package.json. Install the dependencies with `npm install`
 
