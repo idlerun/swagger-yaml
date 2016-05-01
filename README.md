@@ -27,7 +27,7 @@ definitions:
 
 ### Split
 
-#### foo.yaml
+#### [foo.yaml](https://github.com/idlerun/swagger-yaml/blob/master/foo.yaml)
 ```yaml
 definitions:
   foo:
@@ -37,7 +37,7 @@ definitions:
         type: string
 ```
 
-#### bar.yaml
+#### [bar.yaml](https://github.com/idlerun/swagger-yaml/blob/master/bar.yaml)
 ```yaml
 definitions:
   bar:
@@ -54,30 +54,62 @@ YAML is a simple key-value tree structure like JSON, so multiple trees can be co
 
 NodeJS package.json. Install the dependencies with `npm install`
 
-<%= render_code("package.json", "json") %>
+#### [package.json](https://github.com/idlerun/swagger-yaml/blob/master/package.json)
+```json
+{
+  "main": "generate.js",
+  "scripts": {
+    "start": "node generate.js"
+  },
+  "dependencies": {
+    "extendify": "^1.0.0",
+    "glob": "^6.0.4",
+    "yaml-js": "^0.1.3"
+  }
+}
+```
 
 Script to combine all yaml files in an src directory
 
-<%= render_code("generate.js", "javascript") %>
+#### [generate.js](https://github.com/idlerun/swagger-yaml/blob/master/generate.js)
+```javascript
+const fs = require('fs');
+const glob = require('glob');
+const YAML = require('yaml-js');
+const extendify = require('extendify');
+
+glob("src/**/*.yaml", function (er, files) {
+  const contents = files.map(f => {
+    return YAML.load(fs.readFileSync(f).toString());
+  });
+  const extend = extendify({
+    inPlace: false,
+    isDeep: true
+  });
+  const merged = contents.reduce(extend);
+  console.log("Generating swagger.yaml, swagger.json");
+  fs.existsSync("target") || fs.mkdirSync("target");
+  fs.writeFile("target/swagger.yaml", YAML.dump(merged));
+  fs.writeFile("target/swagger.json", JSON.stringify(merged, null, 2));
+});
+```
 
 Create an `src` directory containing the yaml sources
 
-<%= render_code("src/base.yaml", "javascript", {:range => [1,2]}) %>
+#### src/info.yaml
+```yaml
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: Swagger Petstore (Simple)
+...
+```
 
 Run the script
-
 ``` bash
 node .
 ```
 
 A combined Swagger definition will be written to `target/swagger.yaml`
 
-### Example 'src' (From petstore_simple)
-
-<%= render_code("src/base.yaml", "javascript", {:range => [1,5]}) %>
-
-<%= render_code("src/defs.yaml", "javascript", {:range => [1,5]}) %>
-
-<%= render_code("src/solo_pet.yaml", "javascript", {:range => [1,5]}) %>
-
-<%= render_code("src/pets.yaml", "javascript", {:range => [1,5]}) %>
+#### [Full example src directory](https://github.com/idlerun/swagger-yaml/tree/master/src) (From petstore_simple)
