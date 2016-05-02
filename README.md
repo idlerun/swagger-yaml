@@ -1,3 +1,10 @@
+---
+title: "Swagger with Split YAML Files"
+tags: swagger yaml nodejs
+date: 2016-02-11
+---
+
+
 Swagger is a great way of describing an API in YAML or JSON. From that description one can generate client or server bindings for a huge number of different languages.
 
 Described here is an alternate structure for defining a Swagger API which splits the definition into separate files which are combined by a NodeJS script prior to processing by the Swagger Generator.
