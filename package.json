@@ -1,4 +1,8 @@
 {
+  "name": "swagger-yaml",
+  "version": "1.0.0",
+  "description": "Swagger YAML preprocessor to allow split source files",
+  "homepage": "https://github.com/idlerun/swagger-yaml",
   "main": "generate.js",
   "scripts": {
     "start": "node generate.js"
